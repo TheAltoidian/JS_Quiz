@@ -1,0 +1,40 @@
+* {
+    font-family: sans-serif;
+}
+
+a:link {
+    text-decoration: none;
+    color: violet;
+}
+
+a:visited {
+    color: violet;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.quiz {
+    text-align: center;
+}
+
+.quiz h1, p, .btn {
+    padding: 10px;
+}
+
+.quiz p {
+    font: bold;
+    margin: auto;
+    max-width: 50%;
+}
+
+.btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: purple;
+    color: white;
+}
