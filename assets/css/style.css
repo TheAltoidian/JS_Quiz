@@ -19,6 +19,7 @@ header {
 
 .quiz {
     text-align: center;
+    margin: auto;
 }
 
 .quiz h1, p, .btn {
@@ -37,4 +38,15 @@ header {
     border-radius: 8px;
     background: purple;
     color: white;
+}
+
+.answer-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: auto;
+}
+
+.answer-buttons .btn {
+    margin: 5px;
 }
