@@ -27,12 +27,23 @@
     <div id="displayQA" class="quiz hide">
         <h3 id="question-text"> q1.question </h3>
         <div class="answer-buttons">
-            <button class="btn Q" id="answer1">A</button>
-            <button class="btn Q" id="answer2">Basdf</button>
-            <button class="btn Q" id="answer3">C</button>
-            <button class="btn Q" id="answer4">D</button>
+            <button class="btn" id="answer1">A</button>
+            <button class="btn" id="answer2">Basdf</button>
+            <button class="btn" id="answer3">C</button>
+            <button class="btn" id="answer4">D</button>
         </div>
     </div>
+
+    <div class="quiz hide" id="end-screen">
+        <h1>All done!</h1>
+        <h3 id="finalScore">Your final score is </h3>
+        <h3>Enter initials:</h3>
+        <form id="name-submission">
+            <input type="text" name="userInitials">
+        </form>
+        <button class="btn" id="submit-button">Submit</button>
+    </div>
+
     <script src="./assets/js/script.js"></script>
 </body>
 

@@ -1,5 +1,6 @@
 var timerEl = document.querySelector(".timer");
-var timeLeft = 75;
+var timeLeft = 3;
+let timerGo;
 
 var quizList = [
     {
@@ -16,24 +17,41 @@ var quizList = [
 
 var currentIndex = 0;
 
-
 var quizTextEl = document.querySelector("#quiz-text");
 var startButton = document.querySelector("#Start_Quiz");
+var submitButton = document.querySelector("#submit-button");
+var scoreCard = document.querySelector("#finalScore");
 
-var timerControl = function() {
-    timeLeft--;
-    timerEl.textContent = "Time: " + timeLeft;
+var gameOver = function () {
+    var score = timeLeft;
+    //unhide end screen
+    document.getElementById("end-screen").removeAttribute("class");
+    document.getElementById("end-screen").setAttribute("class", "quiz");
+    //hide quiz
+    document.getElementById("displayQA").style.display = "none";
+
+    scoreCard.textContent = "Your final score is " + score + ".";
 };
 
-// var questionFormat = {};
+// decrease time remaining every second
+var timerControl = function() {
+    console.log(timeLeft);
+    timeLeft--;
+    timerEl.textContent = "Time: " + timeLeft;
+    if (timeLeft < 1) {
+        clearInterval(timerGo);
+        gameOver();
+    }
+};
 
 var question = function () {
     //start the timer
-    timerEl.textContent = "Time: " + timeLeft;
-    setInterval(timerControl, 1000);
+    timerGo = setInterval(timerControl, 1000);
+    timerEl.textContent = "Time: " + timeLeft
     //unhide the displayQA 
     document.getElementById("displayQA").removeAttribute("class");
     document.getElementById("displayQA").setAttribute("class", "quiz");
+
     //Hiding the start Scrren 
     quizTextEl.style.display = "none";
 
@@ -42,8 +60,6 @@ var question = function () {
 };
 
 var displayQA = function () {
-
-    console.log(quizList[currentIndex]);
 
     document.querySelector("#question-text").textContent = quizList[currentIndex].question;
     document.querySelector("#answer1").textContent = quizList[currentIndex].answers[0];
@@ -58,26 +74,31 @@ var displayQA = function () {
 
 }
 
-var checkAnswer = function() {
+var checkAnswer = function () {
     if (this.textContent !== quizList[currentIndex].correct) {
-        // timeLeft-=10
-        alert("Wrong "); 
-    }else {
-        alert("Right"); 
+        timeLeft-=10
+        // say wrong
+    } else {
+        // say right
     }
-    console.log("button clicked", this.textContent , "Correct ans is ",  quizList[currentIndex].correct);
 
     //move to next question 
     currentIndex++;
     //call the function 
     if (quizList[currentIndex]) {
-        displayQA(); 
+        displayQA();
     }
     else {
         // go to end screen
-        alert("Game over")
+        clearInterval(timerGo);
+        gameOver();
     }
 
 }
-console.log(timerEl.textContent);
+
+var saveScore = function () {
+
+};
+
 startButton.addEventListener("click", question);
+submitButton.addEventListener("click", saveScore);
