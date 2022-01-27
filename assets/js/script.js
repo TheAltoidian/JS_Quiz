@@ -2,6 +2,9 @@ var timerEl = document.querySelector(".timer");
 var timeLeft = 75;
 let timerGo;
 
+var highScores = [];
+var currentScore;
+
 var quizList = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -36,6 +39,27 @@ var quizTextEl = document.querySelector("#quiz-text");
 var startButton = document.querySelector("#Start_Quiz");
 var submitButton = document.querySelector("#submit-button");
 var scoreCard = document.querySelector("#finalScore");
+var scoreRecord = document.querySelector("#score-screen");
+
+var showScores = function() {
+    document.getElementById("end-screen").style.display = "none";
+    document.getElementById("score-screen").removeAttribute("class");
+    document.getElementById("score-screen").setAttribute("class", "quiz");
+
+    var record = JSON.parse(localStorage.getItem("currentScore"));
+    console.log(record);
+    scoreRecord.textContent = record.initials + ": " + record.setScore;
+}
+
+var submitScore = function () {
+    console.log(document.getElementById("userInitials").value);
+    var currentScore = {
+        initials: document.getElementById("userInitials").value,
+        setScore: timeLeft
+    };
+    localStorage.setItem("currentScore", JSON.stringify(currentScore));
+    showScores();
+}
 
 var gameOver = function () {
     var score = timeLeft;
@@ -46,11 +70,12 @@ var gameOver = function () {
     document.getElementById("displayQA").style.display = "none";
 
     scoreCard.textContent = "Your final score is " + score + ".";
+
+    document.getElementById("submit-button").addEventListener("click", submitScore);
 };
 
 // decrease time remaining every second
-var timerControl = function() {
-    console.log(timeLeft);
+var timerControl = function () {
     timeLeft--;
     timerEl.textContent = "Time: " + timeLeft;
     if (timeLeft < 1) {
@@ -63,17 +88,16 @@ var question = function () {
     //start the timer
     timerGo = setInterval(timerControl, 1000);
     timerEl.textContent = "Time: " + timeLeft
-    //unhide the displayQA 
+
+    //unhide the displayQA and hide the start screen
     document.getElementById("displayQA").removeAttribute("class");
     document.getElementById("displayQA").setAttribute("class", "quiz");
-
-    //Hiding the start Scrren 
     quizTextEl.style.display = "none";
 
     displayQA();
-
 };
 
+// 
 var displayQA = function () {
 
     document.querySelector("#question-text").textContent = quizList[currentIndex].question;
@@ -91,7 +115,7 @@ var displayQA = function () {
 
 var checkAnswer = function () {
     if (this.textContent !== quizList[currentIndex].correct) {
-        timeLeft-=10
+        timeLeft -= 10
         // say wrong
     } else {
         // say right
